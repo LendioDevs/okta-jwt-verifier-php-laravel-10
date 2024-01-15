@@ -19,7 +19,6 @@ namespace Okta\JwtVerifier\Adaptors;
 
 use Carbon\Carbon;
 use Firebase\JWT\JWT as FirebaseJWT;
-use Illuminate\Cache\ArrayStore;
 use Firebase\JWT\Key;
 use Okta\JwtVerifier\Jwt;
 use Okta\JwtVerifier\Request;
@@ -40,11 +39,11 @@ class FirebasePhpJwt implements Adaptor
      */
     private $leeway;
 
-    public function __construct(Request $request = null, int $leeway = 120, CacheInterface $cache = null)
+    public function __construct(Request $request = null, int $leeway = 120, CacheInterface $cache)
     {
         $this->request = $request ?: new Request();
         $this->leeway = $leeway ?: 120;
-        $this->cache = $cache ?: new \Illuminate\Cache\Repository(new ArrayStore(true));
+        $this->cache = $cache;
     }
 
     public function clearCache(string $jku)
